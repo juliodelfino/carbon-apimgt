@@ -137,7 +137,6 @@
 <body onload="checkSessionKey()">
     <main class="center-segment">
         <div class="ui container medium center aligned middle aligned">
-
             <!-- product-title -->
             <%
                 File productTitleFile = new File(getServletContext().getRealPath("extensions/product-title.jsp"));
@@ -397,12 +396,12 @@
             <%
                 if(reCaptchaEnabled) {
             %>
-                var error_msg = $("#error-msg");
+                var error_msg = $("#error-msg").length ? $("#error-msg") : $("#error-msg-recaptcha");
 
                 $("#loginForm").submit(function (e) {
                     var resp = $("[name='g-recaptcha-response']")[0].value;
                     if (resp.trim() == '') {
-                        error_msg.text("<%=AuthenticationEndpointUtil.i18n(resourceBundle,"please.select.recaptcha")%>");
+                        error_msg.text("Kindly confirm you are not a robot.");
                         error_msg.show();
                         $("html, body").animate({scrollTop: error_msg.offset().top}, 'slow');
                         return false;
