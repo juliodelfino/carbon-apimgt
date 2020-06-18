@@ -132,7 +132,7 @@
     try {
         props.load(Files.newInputStream(path));
         var recaptchaEnabled = props.getProperty("recaptcha.enabled");
-        if (recaptchaEnabled) {
+        if (true == recaptchaEnabled) {
             var siteKey = props.getProperty("recaptcha.site.key");
             var secretKey = props.getProperty("recaptcha.secret.key");
             var reCaptchaUrl = props.getProperty("recaptcha.api.url");
