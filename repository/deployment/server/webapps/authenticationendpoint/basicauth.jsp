@@ -60,6 +60,10 @@
         $.fn.preventDoubleSubmission = function() {
             $(this).on('submit',function(e){
                 var $form = $(this);
+                if (getParameterByName("reCaptcha") == "TRUE" && 
+                    $("[name='g-recaptcha-response']")[0].value == '') {
+                    return false;
+                }
                 if ($form.data('submitted') === true) {
                     // Previously submitted - don't submit again.
                     e.preventDefault();
@@ -177,7 +181,7 @@
     <%
         }
     %>
-
+<div class="ui hidden negative message" id="error-msg-recaptcha">Kindly confirm you are not a robot.</div>
     <% if (Boolean.parseBoolean(loginFailed)) { %>
     <div class="ui visible negative message" id="error-msg"><%= AuthenticationEndpointUtil.i18n(resourceBundle, errorMessage) %></div>
     <% } else if((Boolean.TRUE.toString()).equals(request.getParameter("authz_failure"))){%>
@@ -330,7 +334,6 @@
         <div class="column mobile center aligned tablet right aligned computer right aligned buttons tablet no-margin-right-last-child computer no-margin-right-last-child">
             <button
                 type="submit"
-                onclick="submitCredentials(event)"
                 class="ui primary large button"
                 tabindex="4"
                 role="button">
